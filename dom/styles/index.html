@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+
+<body>
+
+    <style>
+        .caixas {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .demo {
+            width: 100px;
+            height: 100px;
+            background-color: gray;
+        }
+
+        .green {
+            background-color: green;
+        }
+
+        .yellow {
+            background-color: yellow;
+        }
+
+        .blue {
+            background-color: blue;
+        }
+    </style>
+
+    <div id="app">
+        <div class="caixas">
+            <div id="c1" class="demo" @click="toggle" :class="c1"></div>
+            <div id="c2" class="demo" @click="toggle" :class="c2"></div>
+            <div id="c3" class="demo" @click="toggle" :class="c3"></div>
+        </div>
+        <hr>
+        <div class="caixas">
+            <div class="demo" :style="{backgroundColor:c1}"></div>
+            <div class="demo" :style="{backgroundColor:c2}"></div>
+            <div class="demo" :style="{backgroundColor:c3}"></div>
+        </div>
+        <hr>
+        <div class="caixas">
+            <div class="demo" :style="[estilos, {height:altura + 'px'}]"></div>
+            <div class="demo" :style="{backgroundColor:c2}"></div>
+            <div class="demo" :style="{backgroundColor:c3}"></div>
+        </div>
+        <div>
+            <label for="color">Cor</label>
+            <input type="text" v-model="cor">
+        </div>
+        <div>
+            <label for="altura">Largura</label>
+            <input type="number" v-model="largura">
+        </div>
+        <div>
+            <label for="altura">Altura</label>
+            <input type="number" v-model="altura">
+        </div>
+        <div>
+            <label for="altura">Girar</label>
+            <input type="number" v-model="girar">
+        </div>
+        <div>
+            <button @click="toggleStartStop">{{girando != null ? 'Parar' : 'Girar'}}</button>
+        </div>
+
+    </div>
+</body>
+
+</html>
+
+<script>
+
+    new Vue({
+        el: "#app",
+        data: {
+            colors: ['green', 'yellow', 'blue'],
+            c1: 'green',
+            c2: 'yellow',
+            c3: 'blue',
+            cor: 'blue',
+            largura: 100,
+            altura: 100,
+            girar: 0,
+            girando: null
+        },
+        methods: {
+            toggle(event) {
+                target = event.target;
+                const id = target.getAttribute('id');
+                const prop = this[id];
+                let nextColor = this.colors.indexOf(prop) + 1;
+                console.log();
+                nextColor = nextColor > 2 ? 0 : nextColor;
+                this[id] = this.colors[nextColor];
+            },
+            toggleStartStop() {
+                if (this.girando) {
+                    clearInterval(this.girando)
+                    this.girando = null;
+                } else {
+                    this.girando = setInterval(() => {
+                        this.girar++
+                        if (this.girar == 360) {
+                            this.girar = 0
+                        }
+                    }, 10)
+                }
+            }
+        },
+        computed: {
+            estilos() {
+                return {
+                    backgroundColor: this.cor,
+                    width: `${this.largura}px`,
+                    transform: `rotate(${this.girar}deg)`
+                }
+            }
+
+        }
+    });
+
+
+</script>

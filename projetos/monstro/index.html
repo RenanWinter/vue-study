@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+    <div id="app" class="container">
+
+        <div class="card bars">
+            <div class="player bar">
+                <h2>Jogador</h2>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-label="Success example"
+                        :class="{'bg-success':playerLife > 50, 'bg-warning':playerLife > 20 && playerLife <= 50, 'bg-danger':playerLife<=20}"
+                        :style="{width: playerLife + '%'}" :aria-valuenow="playerLife" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                </div>
+                <div class="life">{{playerLife}}%</div>
+            </div>
+            <div class="monster bar">
+                <h2>Monstro</h2>
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" aria-label="Success example"
+                        :class="{'bg-success':monsterLife > 50, 'bg-warning':monsterLife > 20 && monsterLife <= 50, 'bg-danger':monsterLife<=20}"
+                        :style="{width: monsterLife + '%'}" :aria-valuenow="monsterLife" aria-valuemin="0"
+                        aria-valuemax="100"></div>
+                </div>
+                <div class="life">{{monsterLife}}%</div>
+            </div>
+        </div>
+
+        <div v-if="temResultado" class="result">
+            <div v-if="resultado == 'win'" class="win bg-success">Você ganhou :)</div>
+            <div v-if="resultado == 'lost'" class="lose bg-danger">Você Perdeu :(</div>
+            <div v-if="resultado == 'draw'" class="lose bg-secondary">Os dois Morreram</div>
+        </div>
+
+        <div class="card actions">
+            <template v-if="running">
+                <button class="btn btn-primary" @click="atacar(false)">Atacar</button>
+                <button class="btn btn-warning" @click="atacar(true)">Atacar Especial</button>
+                <button class="btn btn-success" @click="healAndHurt()" >Curar</button>
+                <button class="btn btn-secondary" @click="desistir">Desistir</button>
+            </template>
+
+            <button v-if="!running" class="btn btn-primary" @click="iniciarJogo">Iniciar</button>
+
+
+        </div>
+
+        <div v-if='logs.length'  class="card logs">
+            <div v-for="register in logs" class="log">
+                <div class="alert" :class="register.class" role="alert">
+                    {{register.log}}
+                </div>
+            </div>
+            
+        </div>
+
+
+
+    </div>
+    <script src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

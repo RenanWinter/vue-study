@@ -1,0 +1,42 @@
+.bars {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 24px;
+    padding: 24px;
+}
+
+.bar {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.progress {
+    width: 100%;
+}
+
+.actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 24px;
+}
+
+.result{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3em;
+}
+
+.result > div{
+    color: white;
+    width: 100%;
+    padding: 15px;
+    text-align: center;
+}
